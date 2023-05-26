@@ -1,10 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "WP Info",
-  "description": "Information about WordPress websites",
+  "name": "WP Last Modified",
+  "description": "When run on a WordPress post page, display the modified value of the post.",
   "version": "1.0",
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": "images/w.png"
-  }
+  },
+  "permissions": ["activeTab", "scripting"]
 }
