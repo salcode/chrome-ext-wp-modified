@@ -3,6 +3,15 @@ async function getCurrentTab() {
   return tab;
 }
 
+/**
+ * Update the text of the #message element inside the popup.
+ *
+ * @param string newMessage The new message to display.
+ */
+function updateMessageInPopup(newMessage) {
+  document.querySelector('#message').innerText = newMessage;
+}
+
 async function func() {
   try {
     const restApiUrlForPost = document.querySelector('link[rel="alternate"][type="application/json"]')?.href;
@@ -14,17 +23,18 @@ async function func() {
     if (! modified) {
       throw new Error('There is no modified value for this page');
     }
-    alert (`Last modified ${modified}`);
+    return `Last modified: ${modified}`;
   } catch ( error ) {
-    alert(`${error.toString()}`);
+    return error.toString();
   }
 }
 
 (async () => {
   // Run func() inside current tab.
   const tab = await getCurrentTab();
-  chrome.scripting.executeScript({
+  const [ injectionResult ] = await chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func
   });
+  updateMessageInPopup(injectionResult.result);
 })();
